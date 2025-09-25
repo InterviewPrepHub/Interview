@@ -1,7 +1,6 @@
 package com.interview.Interview.Interview2025.Atlassian.Round3;
 
 import lombok.Getter;
-import org.interview.prep.code.Interview2025.Atlassian.Round3.Subscription;
 
 import java.util.HashMap;
 import java.util.Map;

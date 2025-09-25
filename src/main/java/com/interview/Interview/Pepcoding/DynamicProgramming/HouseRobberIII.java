@@ -1,6 +1,6 @@
 package com.interview.Interview.Pepcoding.DynamicProgramming;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.BTNode;
+import com.interview.Interview.Pepcoding.Node.BTNode;
 
 import java.util.HashMap;
 import java.util.Map;

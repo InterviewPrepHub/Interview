@@ -1,7 +1,5 @@
 package com.interview.Interview.Pepcoding.StackAndQueues.Level1.Stack;
 
-import org.interview.prep.code.leetcode.design.implementation.LeetcodeDesign.MinStack;
-
 import java.util.Stack;
 
 public class MinStack2 {

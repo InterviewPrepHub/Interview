@@ -1,6 +1,6 @@
 package com.interview.Interview.LeetCode_Implementations.Queue;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.LLNode;
+import com.interview.Interview.Pepcoding.Node.LLNode;
 
 public class ImplementQueueUsingLinkedList {
 

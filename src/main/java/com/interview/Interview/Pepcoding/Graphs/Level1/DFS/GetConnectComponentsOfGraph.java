@@ -1,6 +1,6 @@
 package com.interview.Interview.Pepcoding.Graphs.Level1.DFS;
 
-import org.interview.prep.code.leetcode.design.implementation.Pepcoding.Graphs.Edge;
+import com.interview.Interview.Pepcoding.Graphs.Edge;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,7 +1,5 @@
 package com.interview.Interview.Interview2025.Atlassian.Round3;
 
-import org.interview.prep.code.Interview2025.Atlassian.Round3.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

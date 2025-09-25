@@ -19,6 +19,20 @@ Subsequent successful calls keep it in the CLOSED state.
                                    <-----------------------
                                          failure
 
+We implement 3 states in a circuit breaker:
+
+CLOSED:
+All requests go through.
+If failures exceed a threshold → go to OPEN.
+
+OPEN:
+All requests are blocked immediately.
+Wait for a timeout before transitioning to HALF_OPEN.
+
+HALF_OPEN:
+Allow a limited number of test requests.
+If success → go back to CLOSED.
+If failure → back to OPEN.
 
  */
 public class CircuitBreaker {
@@ -96,6 +110,7 @@ public class CircuitBreaker {
 
         CircuitBreaker circuitBreaker = new CircuitBreaker(3, 2, 5000);
 
+        //list of outcomes of each call
         boolean[] callResults = {false, false, false, false, false, true, true, true, true, true};
 
         for (int i = 0; i < 10; i++) {
