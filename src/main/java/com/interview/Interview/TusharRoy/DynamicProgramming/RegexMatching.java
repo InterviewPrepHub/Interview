@@ -1,4 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy;
+package com.interview.Interview.TusharRoy.DynamicProgramming;
 
 /*
 * -> matches 0 or more occurrences of ch before *

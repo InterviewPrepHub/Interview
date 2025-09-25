@@ -1,4 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy;
+package com.interview.Interview.TusharRoy.DynamicProgramming;
 
 /*
 Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:

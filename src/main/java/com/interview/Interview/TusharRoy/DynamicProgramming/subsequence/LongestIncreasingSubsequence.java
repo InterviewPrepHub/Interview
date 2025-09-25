@@ -1,4 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy.subsequence;
+package com.interview.Interview.TusharRoy.DynamicProgramming.subsequence;
 
 import java.util.ArrayDeque;
 

@@ -1,6 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy;
-
-import java.util.Arrays;
+package com.interview.Interview.TusharRoy.DynamicProgramming;
 
 public class CoinChangeProblem {
 

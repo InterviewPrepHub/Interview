@@ -1,4 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy.subsequence;
+package com.interview.Interview.TusharRoy.DynamicProgramming.subsequence;
 
 /*
               ____c1==c2____ c(c1m)+c(mc2)+1

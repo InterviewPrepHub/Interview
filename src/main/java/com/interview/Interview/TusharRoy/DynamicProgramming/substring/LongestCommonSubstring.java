@@ -1,4 +1,4 @@
-package com.interview.Interview.Pepcoding.DynamicProgramming.TusharRoy.substring;
+package com.interview.Interview.TusharRoy.DynamicProgramming.substring;
 
 public class LongestCommonSubstring {
 
