@@ -1,0 +1,107 @@
+System Design Problem: Shipping Cost Calculation Service
+
+Problem Statement
+
+You are tasked with designing a system to calculate the total shipping cost for orders placed by customers in different
+countries. The system should handle multiple products, each with specific shipping costs that vary by country. The goal
+is to create a scalable, maintainable, and efficient service that can handle high volumes of order requests and return
+the correct shipping cost promptly.
+
+
+
+Order:
+{
+  "country": "US", // or "CA" for the CA order
+  "items": [
+    {"product": "mouse", "quantity": 20},
+    {"product": "laptop", "quantity": 5}
+  ]
+}
+
+
+Shipping_Cost
+{
+  "US": [
+    {"product": "mouse", "cost": 550},
+    {"product": "laptop", "cost": 1000}
+  ],
+  "CA": [
+    {"product": "mouse", "cost": 750},
+    {"product": "laptop", "cost": 1100}
+  ]
+}
+
+
+import java.util.List;
+import java.util.Map;
+
+class Order {
+    String country;
+    List<Item> items;
+
+    public Order(String country, List<Item> items) {
+        this.country = country;
+        this.items = items;
+    }
+}
+
+class Item {
+    String product;
+    int quantity;
+
+    public Item(String product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
+}
+
+class ShippingCost {
+    Map<String, List<ProductCost>> costs;
+
+    public ShippingCost(Map<String, List<ProductCost>> costs) {
+        this.costs = costs;
+    }
+}
+
+class ProductCost {
+    String product;
+    int cost;
+
+    public ProductCost(String product, int cost) {
+        this.product = product;
+        this.cost = cost;
+    }
+}
+
+public class ShippingCalculator {
+
+    public static int calculate_shipping_cost(Order order, ShippingCost cost) {
+        int totalCost = 0;
+
+        // Get the list of product costs for the given country
+        List<ProductCost> productCosts = cost.costs.get(order.country);
+
+        for (Item item : order.items) {
+            for (ProductCost productCost : productCosts) {
+                if (item.product.equals(productCost.product)) {
+                    totalCost += item.quantity * productCost.cost;
+                }
+            }
+        }
+
+        return totalCost;
+    }
+
+    public static void main(String[] args) {
+        // Example usage
+        List<Item> items = List.of(new Item("mouse", 20), new Item("laptop", 5));
+        Order order_us = new Order("US", items);
+
+        List<ProductCost> usCosts = List.of(new ProductCost("mouse", 550), new ProductCost("laptop", 1000));
+        List<ProductCost> caCosts = List.of(new ProductCost("mouse", 750), new ProductCost("laptop", 1100));
+        ShippingCost shippingCost = new ShippingCost(Map.of("US", usCosts, "CA", caCosts));
+
+        int totalShippingCost = calculate_shipping_cost(order_us, shippingCost);
+        System.out.println("Total shipping cost: " + totalShippingCost);  // Output: 16000
+    }
+}

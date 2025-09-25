@@ -1,0 +1,96 @@
+Entity list
+
+  - all the entities
+  - Document - id, content, status...
+
+
+
+function / Method
+  - input: Event
+    - {
+        id:
+        docId:
+        eventType: update/delete/approve/reject,
+        payload: {}
+      }
+
+
+
+    //whatever is in the payload in Event needs to be updated in document
+
+
+Document
+id - 1, content: this is test doc, title: Test doc, status: draft, createdTs, up
+
+Event
+docId: 1, update event, payload: {content: final doc template}
+
+
+id - 1, content: final doc template, title: Test doc, status: draft, createdTs, updateTs:
+
+
+
+class EventProcessor {
+
+  private List<Document> documents;
+
+  public EventProcessor(List<Document> documents) {
+    this.documents = documents;
+  }
+
+  public void process(Event event) {
+
+    //ext doc_id from event
+    event_doc_id = event.getdocId();
+
+    for(Document doc : documents) {
+        doc_id = doc.getId();
+
+        if(event_doc_id = doc_id) {
+            String eventType = event.getEventType;
+
+            processDocumentAsPerEventType(eventType, event, doc)
+          }
+
+
+      }
+
+
+  }
+
+  public void processDocumentAsPerEventType(String eventType, Event event, Document doc) {
+
+    if(eventType == "update") {
+      event.getPayload()
+    }
+
+    if(eventType == "delete") {
+
+    }
+
+    if(eventType == "approve") {
+
+    }
+
+    if(eventType == "reject") {
+
+    }
+
+}
+
+
+
+
+
+public interface EventHandler {
+
+     void processEvent(Event event);
+
+
+  }
+
+
+  public void updateEventHandler implements EventHandler {
+
+
+    }

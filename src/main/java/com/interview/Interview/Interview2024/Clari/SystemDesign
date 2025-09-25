@@ -1,0 +1,41 @@
+An important part of the Clari product is to bring data from multiple sources and connect them together for forecasting. One of these key sources mentioned above is the CRM. The objective is to bring in CRM data into an internal Data warehouse  For the purposes of this problem, we are only concerned with ingestion and will not be worried about how this gets consumed. Here are a few key points to note about the problem at hand,
+
+
+
+We need to bring multiple entities from the CRM, e.g. Contacts, Accounts, Opportunities
+We integrate with multiple CRMs (e.g. Salesforce, Hubspot)
+The integration with each of the CRMs is through an API
+We collect the api credentials from an admin which have the ability to query the entities for all users within an organization
+
+The API of each CRM supports the following,
+Let's assume CRM supports three types of APIs (Paginated) :
+API to get a list of entities. (contacts, accounts, opportunities etc)
+API to get schema definitions for each entity given entity id.
+API to fetch the data for each of these entities.
+The lists returned by the APIs above also contain some metadata about each entity along with their ids
+Get the details for a single entity given an id: This is needed in situations where the paginated list api does not contain the information we need for a given entity.
+We can fetch only a select list of fields for each entity in the above APIs
+Get the list of fields available for each entity
+APIs are rate limited
+APIs have the ability to get all entities modified after a particular time
+API responses have last modified time
+
+The product needs to support fetching of a select list of fields from the CRM for each entity
+
+Scale:
+2000 customers
+API latency 100ms median
+Rate limits are variable for each customer
+Initial sync can involve millions of entities
+Daily sync can be huge if a lot of entities were changed due to some automation.
+
+
+
+====================================================================================
+what could be its simple top few features
+
+what are functional requirements
+
+what are no functional requirements
+
+How will the DB model look like

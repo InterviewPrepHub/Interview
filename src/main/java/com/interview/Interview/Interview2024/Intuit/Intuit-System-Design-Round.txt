@@ -1,0 +1,255 @@
+1. We are building a music streaming application in which users connect to our server to 
+hear one of many music playlists for various purposes such as studying, working, sleeping, 
+exercising, etc. We are considering whether to host this application on a single dedicated 
+server or use multiple servers.
+
+What are some advantages and disadvantages of using multiple servers for this application?
+
+Using multiple servers for your music streaming application can offer several advantages:
+
+Advantages:
+
+Scalability: With multiple servers, you can easily scale your application to handle a 
+growing number of users. You can add more servers as needed to distribute the load and 
+maintain performance.
+
+Fault Tolerance: If one server fails or experiences issues, the others can continue to 
+handle requests, minimizing downtime and ensuring continuity of service.
+
+Load Balancing: Multiple servers allow you to distribute incoming traffic across them 
+using load balancers, which helps optimize performance and ensures no single server is 
+overwhelmed with requests.
+
+Geographic Distribution: You can deploy servers in different geographic locations to 
+reduce latency for users in different regions, improving the overall user experience.
+
+Specialization: You can configure servers to specialize in specific tasks, such as 
+serving static content, handling database queries, or managing user authentication, 
+optimizing performance for each task.
+
+However, there are also some disadvantages to using multiple servers:
+
+Disadvantages:
+
+Complexity: Managing multiple servers adds complexity to your infrastructure, including 
+configuration, monitoring, and maintenance tasks. You'll need additional resources and 
+expertise to handle this complexity effectively.
+
+Cost: Running multiple servers can be more expensive than hosting everything on a single 
+server, especially if you need to use advanced networking equipment, load balancers, or 
+specialized hosting services.
+
+Synchronization: When using multiple servers, you need to ensure that data is synchronized 
+across them to maintain consistency. This can introduce challenges, especially for real-time 
+applications like streaming, where synchronization delays can impact the user experience.
+
+Potential for Communication Overhead: Communication between servers introduces latency and 
+potential points of failure. You need to carefully design your architecture to minimize 
+communication overhead and ensure efficient data exchange.
+
+Resource Fragmentation: In some cases, resources may be underutilized on certain servers 
+while others are overloaded. Balancing resource allocation across servers can be challenging 
+and requires careful monitoring and optimization.
+
+In conclusion, while using multiple servers offers scalability, fault tolerance, and other 
+benefits, it also introduces complexity, cost, and synchronization challenges. It's essential 
+to carefully consider your application's requirements and architecture before deciding 
+whether to use multiple servers.
+
+
+
+
+
+2. We are designing a system for our entertainment machines where players must pay for 
+\games using our proprietary payment system.
+Players purchase game cards preloaded with credits. When starting a game, players tap 
+their card to a sensor on the machine. The machine connects to our account server via 
+the internet to verify the game card. If the player has sufficient credits, they are 
+deducted from the card and the game begins.
+To recharge their payment cards, players have two options:
+- pay in cash at designated terminals
+- attach a credit card to the payment card, enabling automatic refills when the credit gets low
+
+We expect to install this system on approximately 125,000 machines in the next year.
+
+What concerns do you have with this system?
+
+There are several concerns to consider with this system, especially given its scale and 
+the sensitive nature of financial transactions. Here are some potential concerns:
+
+Security: Security is paramount when handling financial transactions. You'll need to ensure 
+that the communication between the machines and the account server is encrypted and secure 
+to prevent unauthorized access or tampering. Additionally, robust authentication mechanisms 
+should be in place to verify the identity of both the machines and the users.
+
+Reliability: With 125,000 machines in operation, reliability becomes crucial. The system 
+should be designed to handle high loads and be resilient to failures. Redundancy and failover 
+mechanisms should be in place to minimize downtime and ensure continuous operation.
+
+Scalability: As the number of machines grows, the system needs to scale accordingly to 
+handle the increased load. This includes not only the account server but also the payment 
+processing infrastructure and network bandwidth. Scalability should be built into the 
+architecture from the outset to accommodate future growth.
+
+Data Privacy: Collecting and storing payment information, whether it's credit card details 
+or transaction history, brings up privacy concerns. You'll need to comply with relevant 
+regulations such as GDPR or PCI DSS and implement robust data protection measures to safeguard 
+customer data.
+
+Maintenance and Support: Managing such a large fleet of machines requires effective 
+maintenance and support processes. You'll need systems in place for remote monitoring, 
+troubleshooting, and software updates to ensure the machines remain operational and secure.
+
+User Experience: The payment process should be seamless and intuitive for users to encourage 
+adoption and repeat usage. Any friction in the payment or game initiation process could deter 
+users and impact revenue.
+
+Fraud Prevention: Implementing measures to prevent fraud, such as detecting and blocking 
+suspicious transactions, is essential to protect both your business and your customers.
+
+Compliance: Ensure that your payment system complies with relevant financial regulations 
+and standards in all jurisdictions where it operates. This includes obtaining necessary 
+licenses and certifications and staying updated with changes in regulations.
+
+Addressing these concerns requires careful planning, robust infrastructure, and ongoing 
+monitoring and adaptation as the system evolves and grows. It may also be beneficial to 
+engage with security experts and legal advisors to ensure that your system meets industry 
+best practices and regulatory requirements.
+
+
+
+3. We are responsible for query logging and analysis for a search engine.
+We're trying to estimate how much storage we will need to store our logs for the coming year.
+What kinds of information would you gather to make such an estimate?
+
+
+To estimate the storage requirements for query logging and analysis for a search engine, 
+you would need to gather several pieces of information:
+
+Expected Query Volume: Determine the expected number of queries your search engine will 
+handle over the coming year. This includes both total queries and any variations in usage 
+patterns over time (e.g., peak hours, seasonal fluctuations).
+
+Average Query Length: Calculate the average length of a query in terms of characters or 
+bytes. Longer queries will require more storage space to log.
+
+Metadata: Identify any additional metadata associated with each query that you need to store, 
+such as timestamp, user ID, geographic location, device type, search context, etc.
+
+Retention Period: Decide on the retention period for your logs. How long do you intend to 
+keep the logs before archiving or purging them? This will impact the total storage requirements.
+
+Log Format: Determine the format in which you will store the logs (e.g., plain text, 
+structured data, compressed files). Different formats have different storage overheads.
+
+Compression Ratio: If you plan to compress the logs to save storage space, estimate the 
+compression ratio you expect to achieve.
+
+Indexing Overhead: Consider any additional storage required for indexing the logs for 
+efficient querying and analysis.
+
+Log Rotation: If you plan to rotate logs periodically (e.g., daily or weekly), factor in 
+the additional storage needed for maintaining multiple log files simultaneously.
+
+Growth Rate: Take into account the expected growth rate of your search engine's usage 
+over time. This will help you plan for future storage needs and scalability.
+
+Buffer for Unforeseen Events: Allocate a buffer for unforeseen events or spikes in query 
+volume that may occur unexpectedly.
+
+By gathering and analyzing this information, you can estimate the total storage requirements 
+for your query logging and analysis system and ensure that you have sufficient resources to 
+handle the data volume and growth expected over the coming year.
+
+
+
+4. We are working on a remote public file storage solution.
+
+Users upload files to the server, which other users can browse, download, and so on.
+
+Often multiple users want to upload the same file, and we would like to avoid having many 
+copies of the same file on our server to reduce our storage costs. Two files are considered 
+copies if they have byte-for-byte identical contents.
+
+To accomplish this, we do the following:
+
+- A user uploads a file to our server.
+- We look for all files on our server that are the same length and compare them bytewise.
+- If we find two files that are the same, we create a symbolic link from the new file 
+location to the existing file location.
+
+What are some problems with this design and how would you fix them? Are there any ways to 
+make file uploading and storage even more efficient?
+
+While your approach of deduplicating files by comparing their byte-for-byte content and 
+creating symbolic links can help save storage space, there are several potential problems 
+and ways to improve the design:
+
+Performance Impact: As the number of files on your server grows, comparing each new file 
+with existing ones byte-for-byte can become time-consuming and resource-intensive. This 
+could lead to slow file upload times and impact the overall performance of your system.
+
+Solution: Implement a more efficient deduplication algorithm that hashes the files' contents 
+(e.g., using SHA-256) and compares the hashes instead of performing byte-by-byte comparisons. 
+This approach significantly reduces the computational overhead and speeds up the deduplication 
+process.
+
+Race Conditions: In a multi-user environment, race conditions may occur when multiple users 
+simultaneously upload the same file, leading to potential conflicts and inconsistent deduplication 
+outcomes.
+
+Solution: Implement proper locking mechanisms to ensure that only one deduplication process 
+occurs for each unique file. This prevents conflicts and ensures consistent deduplication results.
+
+File Integrity: Symbolic links can pose a risk to file integrity, especially if users have 
+permissions to modify files. If a linked file is inadvertently modified or deleted, it can 
+affect other files that share the same content.
+
+Solution: Consider using hard links instead of symbolic links for deduplication. Hard links 
+provide stronger integrity guarantees since they point directly to the same inode (file data) 
+on disk, reducing the risk of accidental modifications or deletions.
+
+Scalability: As your file storage grows, managing symbolic or hard links for deduplication 
+can become increasingly complex and inefficient.
+
+Solution: Explore distributed file systems or object storage solutions that offer built-in 
+deduplication mechanisms. These systems are designed to handle large-scale storage environments 
+more efficiently and can automatically deduplicate files without manual intervention.
+
+User Experience: While deduplication helps save storage space, it's essential to ensure a 
+seamless user experience during file uploads and downloads.
+
+Solution: Implement progress indicators and feedback mechanisms to keep users informed about 
+the status of their uploads and downloads. Additionally, optimize your system for fast file 
+transfers to enhance user satisfaction.
+
+Security: Ensure that your deduplication process does not compromise user privacy or expose 
+sensitive information.
+
+Solution: Encrypt files before storing them on your server to protect user data from 
+unauthorized access or exposure. Additionally, implement access controls and authentication 
+mechanisms to restrict access to files based on user permissions.
+By addressing these concerns and implementing improvements, you can create a more efficient 
+and reliable remote public file storage solution that optimizes storage space while ensuring 
+a seamless user experience and maintaining data integrity and security.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
