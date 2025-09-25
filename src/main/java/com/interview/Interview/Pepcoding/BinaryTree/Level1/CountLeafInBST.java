@@ -1,6 +1,6 @@
 package com.interview.Interview.Pepcoding.BinaryTree.Level1;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.BTNode;
+import com.interview.Interview.Pepcoding.Node.BTNode;
 
 public class CountLeafInBST {
 

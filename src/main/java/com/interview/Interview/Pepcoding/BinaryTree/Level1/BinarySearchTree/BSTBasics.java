@@ -1,10 +1,8 @@
 package com.interview.Interview.Pepcoding.BinaryTree.Level1.BinarySearchTree;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.BTNode;
-import org.interview.prep.code.leetcode.design.implementation.Node.LLNode;
-import org.interview.prep.code.leetcode.design.implementation.Pepcoding.BinaryTree.Level1.Traversal.CreateTree;
-
-import java.util.List;
+import com.interview.Interview.Pepcoding.BinaryTree.Level1.Traversal.CreateTree;
+import com.interview.Interview.Pepcoding.Node.BTNode;
+import com.interview.Interview.Pepcoding.Node.LLNode;
 
 public class BSTBasics {
 

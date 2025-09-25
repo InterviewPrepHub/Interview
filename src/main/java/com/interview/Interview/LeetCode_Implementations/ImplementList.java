@@ -1,6 +1,6 @@
 package com.interview.Interview.LeetCode_Implementations;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.LLNode;
+import com.interview.Interview.Pepcoding.Node.LLNode;
 
 import java.util.PriorityQueue;
 

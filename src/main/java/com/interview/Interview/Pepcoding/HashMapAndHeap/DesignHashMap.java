@@ -1,6 +1,6 @@
 package com.interview.Interview.Pepcoding.HashMapAndHeap;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.HMNode;
+import com.interview.Interview.Pepcoding.Node.HMNode;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

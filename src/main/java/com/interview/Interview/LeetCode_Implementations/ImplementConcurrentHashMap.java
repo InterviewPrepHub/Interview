@@ -1,6 +1,6 @@
 package com.interview.Interview.LeetCode_Implementations;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.LockFreeNode;
+import com.interview.Interview.Pepcoding.Node.LockFreeNode;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;

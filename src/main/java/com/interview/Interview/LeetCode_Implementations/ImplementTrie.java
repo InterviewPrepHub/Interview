@@ -1,6 +1,6 @@
 package com.interview.Interview.LeetCode_Implementations;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.TrieNode;
+import com.interview.Interview.Pepcoding.Node.TrieNode;
 
 import java.util.ArrayList;
 import java.util.List;

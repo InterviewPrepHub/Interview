@@ -1,5 +1,6 @@
 package com.interview.Interview.Pepcoding.BinaryTree.Level1.BinarySearchTree;
 
+import com.interview.Interview.Pepcoding.Node.BTNode;
 import org.interview.prep.code.leetcode.design.implementation.Node.BTNode;
 
 import java.util.*;

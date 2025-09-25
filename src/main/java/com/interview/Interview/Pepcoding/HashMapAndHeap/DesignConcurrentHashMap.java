@@ -1,9 +1,8 @@
 package com.interview.Interview.Pepcoding.HashMapAndHeap;
 
-import org.interview.prep.code.leetcode.design.implementation.Node.LockFreeNode;
+import com.interview.Interview.Pepcoding.Node.LockFreeNode;
 
 import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
