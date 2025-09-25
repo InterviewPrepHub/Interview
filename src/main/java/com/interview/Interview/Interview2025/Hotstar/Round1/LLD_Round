@@ -1,0 +1,15 @@
+Design a logging library, which can be used by applications to log messages of different levels like info, fatal and error
+Each message can be routed to multiple sinks based on the log level,
+	File
+           Sysout
+           Queue
+           Store
+It does provide other capabilities of enrichment and rules
+ We can define templates of {ipaddress} {timestamp} to be inserted with every message
+
+Logging can be sync or asynchronous
+Should not cause issue with performance in memory n CPU
+
+first think about LLD  for this
+
+think of schema before any DB and later DB

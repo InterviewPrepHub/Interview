@@ -1,0 +1,40 @@
+We have two database servers. Server 1 is hot due to uneven key distribution. We’re using consistent hashing
+to assign keys to servers. To rebalance the load, we add Server 3 and start migrating a portion of Server 1’s
+data to it.
+
+⚖️ What if we prioritize consistency (CAP)?
+
+“If we want consistency, we should only allow reads/writes to go to the correct authoritative node, even if it delays the response. We may temporarily block writes for a migrating key until ownership is confirmed.”
+
+⸻
+
+⚡ What if we prioritize availability?
+
+“If availability is prioritized, we can accept writes temporarily on either server (e.g., Server 1 or 3), but we’ll need a conflict resolution strategy or eventual consistency mechanism later.”
+
+
+“When we’re migrating data from Server 1 to Server 3 — even though the servers are online — the situation is conceptually similar to a data partition, which resembles a network partition from a CAP theorem perspective.
+
+In such a scenario, we must make a choice:
+	•	Do we prioritize consistency, ensuring only one server handles a given key, even if that makes some keys temporarily unavailable?
+	•	Or do we prioritize availability, allowing both servers to read/write, accepting the risk of inconsistent state that needs reconciliation?
+
+Since we’re working with a SQL DB with ACID guarantees, the safe answer is:
+	•	Only one server (the owner of the key) should accept reads and writes during migration.
+	•	The system needs a routing layer or metadata table to determine if a key is still on Server 1 or has moved to Server 3.
+	•	Reads/writes should always go to the authoritative location. If that’s not known, better to delay the operation than risk inconsistency.”
+
+⸻
+
+🔍 Use of Partition Concept
+
+“So even though it’s a controlled data migration, the CAP trade-off is real — the system is essentially in a temporary partitioned state, and we must decide:
+	•	Do we block operations until we’re sure where the key lives (Consistency)?
+	•	Or do we accept requests anyway and deal with conflicts later (Availability)?
+
+Since it’s a SQL system with ACID constraints, we choose consistency.”
+
+
+
+so basically we need a downtime for server 1
+“How can we utilize downtime so that reads and writes are consistent during continuous data migration?”

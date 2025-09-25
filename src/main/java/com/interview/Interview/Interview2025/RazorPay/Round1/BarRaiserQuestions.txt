@@ -1,0 +1,153 @@
+Manager Round:
+
+
+
+
+https://www.foundit.in/career-services/prep-ai?utm_source=applicationconfirm&utm_medium=email&utm_term=JobApplication&jobId=35374495&utm_content=viewMoreQuestions
+
+
+Q. Can you provide an example of a complex technical problem you solved in your previous role as a software engineer?
+
+Your personalised answer
+
+Certainly, in my previous role I had to optimize a database query that was slowing down the application, 
+I identified the bottleneck and restructured the query to improve performance significantly. 
+
+Q. Can you discuss a time when you had to quickly adapt to new technologies or tools in a fast-paced work environment?
+
+
+
+Q. Can you discuss a specific project where you successfully implemented a new technology or tool to improve the 
+efficiency of the software development process?
+
+========================================================================================================================
+
+
+Tell me about a time when a project didn’t go as planned. What happened and how did you handle it?
+Tell me about a time when you received negative feedback. How did you respond?
+Was there a time when you missed a deadline or deliverable? What caused it and what did you learn from it?
+
+What was the project?
+
+I worked on the Reseller Abuse Detection project within the Fraud Detection System (FDS) to prevent unfair bulk buying of household items 
+(like soft drinks or diapers) by resellers misusing our up-bundling feature. The goal was to enforce capacity-based purchase limits (in 
+liters or grams) on specific product categories by creating a scalable rule engine within FDS.
+
+Business impact:
+
+This was critical because resellers were buying far beyond what a normal household would consume, leading to out-of-stock situations, 
+reduced consumer trust, and hampered growth in Taiwan. It also distorted our pricing advantage, as resellers earned profits on our 
+subsidized prices and free delivery.
+
+Role and Contributions:
+
+1. I was responsible for designing and implementing item capacity changes and create rules to block orders which are crossing volume thresholds
+2. I also coordinates closely with catalog, checkout and orders team to propagate ITEM_CAPACITY_INFO (liters/grams) across services and downstream 
+into FDS.
+
+✅ Technical Implementation (For context if asked)
+
+	•	Subscribed to the Kafka topic: order.payment-complete.2
+	•	Extracted ITEM_CAPACITY_INFO from order payload
+	•	Built a Flink job in UDIP to extract, transform and persist volume data to Cassandra
+	•	Created dynamic rules in VCE to block orders crossing volume thresholds (e.g., >200L soft drinks per 30 days per credit card)
+	•	Supported 100+ rules with load-tested scaling
+	•	Rules were tied to multiple dimensions: phone number, address, credit card
+
+Issues we faced :
+
+1. One of the biggest challenges we faced was during the deployment of the capacity-based reseller rules — 
+we began seeing a sudden spike in false positives. Legitimate buyers were getting blocked due to incorrect volume aggregation. 
+I traced down the issue on inconsistent or missing attributes in the ITEM_CAPACITY_INFO passed from upstream systems. 
+For example, the capacity was present but unit type (like ML or G) was missing or malformed in certain KANs, especially for edge cases 
+like shampoo or multi-form beverages.
+
+2. there was an issue with SKUcounterPerVI relates to incorrect volume aggregation due to inconsistent catalog data.
+
+SKUcounterPerVI is a value used to determine how many individual SKUs are represented in one VI (Variant Item) unit.
+For example:
+	•	1 VI might contain 24 cans of 330ml Coke.
+	•	So the volume = SKUcounterPerVI × unit volume.
+
+The logic for using SKUcounterPerVI across KANs (product categories) was not consistent. Different categories (like drinks vs facial tissues) handled this attribute differently, or didn’t have it at all.
+
+Specifically:
+	1.	In liquid-based KANs (Tea, Sports Drinks, Sparkling Water), multiplying by SKUcounterPerVI caused over-counting:
+		•	The same volume was being multiplied again, leading to inflated totals like 2000L when the actual was only ~200L.
+		•	This resulted in false positives (FP) where users were wrongly flagged for exceeding limits.
+	2.	In non-liquid KANs (Facial Tissues, Sanitary Towels):
+		•	The SKUcounterPerVI might be needed, but was sometimes missing or incorrectly mapped.
+	3.	Mapping of KAN → Attribute ID was hardcoded in checkout or other services, making it not scalable.
+	
+Rules enforcing limits based on volume were triggering inaccurately.
+
+1. “Tell me about a time when you disagreed with your manager or team.”
+
+Use this angle: Catalog SDK vs Kafka payload
+
+🗣️ Sample Answer:
+
+“During our reseller abuse project, we needed reliable capacity data to calculate volume limits (like liters/grams). 
+I proposed integrating directly with the Catalog SDK to fetch accurate unit attributes for each item. However, the management 
+preferred only using the Kafka payload due to existing FDS ingestion patterns.
+
+I clearly outlined how the Catalog SDK could ensure cleaner data and reduce false positives, but ultimately respected the 
+decision and worked with the order payload team to clean up the Kafka data stream. It taught me to balance ideal technical 
+solutions with practical organizational constraints.”
+
+⸻
+
+2. “Tell me about a time when a project was at risk or failed — how did you handle it?”
+
+Use this angle: No QA, tight deadline, incomplete rule validation
+
+🗣️ Sample Answer:
+
+“Our reseller abuse project had a tight deadline, and both the product and engineering teams were new to the FDS system. 
+We had no QA team, no preprod environment, and no automated testing pipeline — so rule creation and validation was highly error-prone.
+
+To mitigate this, I worked with the PO to put all logic behind a feature flag and pushed for shadow mode validation. 
+We defined clear rule guidelines and even wrote a script to recreate variables and rules from scratch if needed. 
+Despite the constraints, we delivered with enough safeguards and minimal customer impact.”
+
+⸻
+
+3. “Describe a time when you had to make a tradeoff under pressure.”
+
+Use this angle: Feature flags + incomplete test setup
+
+🗣️ Sample Answer:
+
+“With a hard deadline for the reseller abuse prevention launch, we lacked a preprod for the FDS system and had no QA pipeline. 
+We couldn’t guarantee that every rule would work correctly at scale.
+
+Rather than delaying launch, I suggested using feature flags and launching rules in ‘shadow mode’ to observe behavior without 
+taking action. This allowed us to monitor impact safely, validate assumptions, and roll out in phases. This tradeoff gave us 
+agility while protecting customer experience.”
+
+⸻
+
+4. “Tell me about a time when you had to drive quality without a QA team.”
+
+🗣️ Sample Answer:
+
+“In our team, we didn’t have a QA team or test pipeline for the FDS system. During the reseller abuse project, I led efforts 
+with the PO to define test scenarios and guidelines for rule creation. I also built a script to re-create rules and variables, 
+which made it easier to recover from any bad data or rule configurations.
+This allowed us to build confidence and ensure coverage across core use cases despite not having a dedicated QA function.”
+
+⸻
+
+5. “Describe a situation where a project lacked clarity or ownership.”
+
+Use this for highlighting lack of preprod/testing infra
+
+🗣️ Sample Answer:
+
+“The FDS platform we were working on had no pre-production environment and no formal ownership of rule QA. The product manager was new, 
+and so were some engineers.
+
+I proactively drove clarity by documenting the system flow, helping write validation scripts, and building fallback support using 
+feature flags. This helped bring structure and reduce failure risk even in an under-defined environment.”
+	
+		

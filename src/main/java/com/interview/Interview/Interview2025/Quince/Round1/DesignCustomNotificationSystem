@@ -1,0 +1,30 @@
+Design customer notification system
+
+Quince notifications —-> customer
+
+Centralised system
+
+Notifications → event based, otp, order, payment info, shipping update
+
+
+Stripe —> Application
+
+Event based system
+
+
+How notification is formed -> when email sent to customer using amazon SQS & SNS. So how HTML body is converted and given to client/customer
+
+
+How are we defining the SLA of system and how we ensure the SLAs are met
+
+
+Here in order to consider SLAs we need to talk about the task schedular design in arpits cohort
+OTP should send with 5 s
+Order confirm - 15 to 30 s
+Bulk email & promotional. → of to have 5  to 10 mins
+
+
+Latency end to end
+Throughput
+Retry handling → 3 retries
+availabilty

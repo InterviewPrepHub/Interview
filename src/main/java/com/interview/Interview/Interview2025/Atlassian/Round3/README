@@ -1,0 +1,42 @@
+Imagine you’re working on payments team at Atlassian. A customer subscribes to Jira and is interested in exploring
+how much it’ll cost them to keep using the product for the rest of the year.
+Your task is to develop a CostExplorer that calculates the total cost a customer has to pay in a unit year. This
+means that at any day of the year they should be able to get a provisional report giving monthly/yearly cost estimates.
+Cost Explorer should be able to provide a report of -
+Monthly cost (Generate a bill for each month, including bill amount for future months for the unit year)
+Yearly cost estimates (for the unit year)
+Refer -
+
+CostExplorer ->
+  monthlyCostList(): Array/List of size 12 filled with cost incurred in each month of the unit year
+  annualCost(): Total cost in a unit year
+You are working with other teams who provides you below critical information -
+
+Atlassian pricing plans
+To keep it simple, we're keeping one pricing for all product, in reality we'll have different pricing
+
+Customer subscription information
+Initially the problem only expects one product in the list, but during scale-ups we can add multiple products into the mix
+
+
+//  Atlassian pricing plans as tuple of {planId, monthlyCost}
+[
+  {BASIC, 9.99},
+  {STANDARD, 49.99},
+  {PREMIUM, 249.99}
+]
+
+//  Customer subscription information
+Customer -> C1
+Product ->
+ Name -> Jira
+ Subscription -> [ BASIC, "2021-01-01”  ] //  { planId, startDate }, date in YYYY-MM-DD format
+Go ahead!
+Output:
+Assuming year as Jan 2021 - Dec 2021:
+Since the startDate is January 01, 2021 report will look like -
+Monthly Cost = [9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99]
+Yearly cost estimates = 119.88
+For another startDate as February 01, 2021, output report will look like (pro rated) -
+Monthly Cost = [0.00, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99, 9.99]
+Yearly cost estimates = 109.89

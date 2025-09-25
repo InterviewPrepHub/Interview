@@ -1,0 +1,20 @@
+1. consistent hashing issue with physical server issue in streaming data - advantage & disadvantage
+
+2. You’re building a crossword puzzle app. Hints for the words can either be:
+   	1.	Preloaded into the app (offline),
+   	2.	Fetched on-demand from the server (online).
+
+   How would you design the system? What trade-offs exist between the two?
+
+3. You’re given large XML files to process, and all processing must be done on the local machine (no server calls).
+   What techniques would you use to efficiently process these files?
+
+4. Design a news service where a user can provide a URL (e.g., a link to a news article), and the system will extract
+   and return the full article (clean text). You need to optimize or restrict download costs — e.g., by limiting
+   external calls, reducing bandwidth, or budgeting crawler usage.
+
+
+5. You’re working on backend changes for the international release of the FaceVppl app. What updates or considerations
+   should be made to the backend to support a global rollout?
+
+6.

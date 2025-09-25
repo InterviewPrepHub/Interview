@@ -1,0 +1,82 @@
+interface MostPopular {
+    void increasePopularity(Integer contentId);  --> increments populaity of content
+    Integer mostPopular();  ---> return contentId with highestPopoulaoty so  far
+    void decreasePopularity(Integer contentId);     --> decrements populaity of content
+}
+Sample execution:
+[
+  popularityTracker.increasePopularity(7);
+  popularityTracker.increasePopularity(7);
+  popularityTracker.increasePopularity(8);
+  popularityTracker.mostPopular();        // returns 7
+  popularityTracker.increasePopularity(8);
+  popularityTracker.increasePopularity(8);
+  popularityTracker.mostPopular();        // returns 8
+  popularityTracker.decreasePopularity(8);
+  popularityTracker.decreasePopularity(8);
+  popularityTracker.mostPopular();        // returns 7
+  popularityTracker.decreasePopularity(7);
+  popularityTracker.decreasePopularity(7);
+  popularityTracker.decreasePopularity(8);
+  popularityTracker.mostPopular();        // returns -1 since there is no content with popularity greater than 0
+]
+
+
+1. track poupularity
+2. get max poupular content
+3. updating content populaity
+
+
+Hashmap<Integer, Integer>  contentToPopularity  ---> maps contentcId --> its current populaity
+
+2 -> contentids
+
+populaityToContent
+
+TreeMap<Integer, Set<Integer>>  popularityToContent
+
+
+increasePopularity  --> O log(N)
+decreasePopularity  --> O log(N)
+
+mostPopular --> TreeMap.lastEntry  --> O log(N)
+
+priorityQueue  --> max heap based on populairty
+
+maxHeap.add(new int[] (new populairty, contentId))
+
+5,8
+4,8  --> old entry
+3,7
+
+
+
+top -> max.peek()
+contentToPopularity.get(top[1])
+
+inc
+map -> O(1)
+
+push new entry hrap - > O(log n)
+
+
+dec
+
+map -> O(1)
+push new entry hrap - > O(log n)
+
+mostpopular -> log N
+
+
+
+
+tracker.increasePopularity(9);
+tracker.increasePopularity(7);
+tracker.increasePopularity(8);
+tracker.increasePopularity(7);
+tracker.increasePopularity(9);
+tracker.increasePopularity(8);
+tracker.mostPopular(); // returns 8
+
+tracker.decreasePopularity(8);
+tracker.mostPopular(); // returns 9
