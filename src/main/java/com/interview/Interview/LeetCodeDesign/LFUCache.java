@@ -32,14 +32,19 @@ nodeMap: key → node (so we can fetch/update quickly in O(1)).
 freqMap: frequency → list of nodes with this frequency.
 minFreq → always tracks the smallest frequency present in the cache (so we know where to evict from).
 
+Goal: keep items with the highest access frequency in memory.
+
+Eviction: remove the item with the lowest frequency; break ties by recency within that frequency.
  */
 
 public class LFUCache {
     private final int capacity;
     private int size;
     private int minFreq;
-    private final HashMap<Integer, Node> nodeMap;               // key -> node
-    private final HashMap<Integer, DoublyLinkedList> freqMap;   // freq -> DLL of nodes
+    // key -> node
+    private final HashMap<Integer, Node> nodeMap;
+    // freq -> DLL of nodes
+    private final HashMap<Integer, DoublyLinkedList> freqMap;
 
     public LFUCache(int capacity) {
         this.capacity = capacity;

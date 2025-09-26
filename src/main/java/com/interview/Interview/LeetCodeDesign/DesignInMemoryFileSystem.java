@@ -36,101 +36,118 @@ fileSystem.addContentToFile("/a/b/c/d", "hello");
 fileSystem.ls("/"); // return ["a"]
 fileSystem.readContentFromFile("/a/b/c/d"); // return "hello"
 
+Design a file system that allow search by file name
  */
 public class DesignInMemoryFileSystem {
 
-    TrieNode root;
+    private final TrieNode root;
 
     public DesignInMemoryFileSystem() {
-        root = new TrieNode();
+        root = new TrieNode("/", false);
     }
 
+    // -------- API --------
+
     public List<String> ls(String path) {
-        List<String> list = new ArrayList<>();
-        TrieNode node = root.search(path);
-        if(node == null) {
-            return list;
-        }
+        TrieNode node = search(path);
+        List<String> out = new ArrayList<>();
+        if (node == null) return out;
 
         if (node.isFile) {
-            list.add(node.name);
+            // return only the file name
+            out.add(lastToken(path));
         } else {
-            list.addAll(node.children.keySet());
+            out.addAll(node.children.keySet());
+            Collections.sort(out);
         }
-        Collections.sort(list);
-        return list;
+        return out;
     }
 
     public void mkdir(String path) {
-        root.insert(path, false);
+        insert(path, false); // create directories along the path
     }
 
     public void addContentToFile(String filePath, String content) {
-        TrieNode node = root.insert(filePath, true);
+        TrieNode node = insert(filePath, true); // create if not present, mark file
         node.content.append(content);
-
     }
 
     public String readContentFromFile(String filePath) {
-        TrieNode node = root.search(filePath);
-        if(node!=null && node.isFile) {
-            return node.content.toString();
-        }
-        return "";
+        TrieNode node = search(filePath);
+        return (node != null && node.isFile) ? node.content.toString() : "";
     }
 
+    // -------- Internals --------
+
+    // Create nodes along path; mark last node as file/dir per isFile
+    private TrieNode insert(String path, boolean isFile) {
+        String[] parts = tokens(path);
+        TrieNode cur = root;
+        for (String p : parts) {
+            cur.children.putIfAbsent(p, new TrieNode(p, false));
+            cur = cur.children.get(p);
+        }
+        // mark the terminal node appropriately
+        cur.isFile = cur.isFile || isFile; // if ever marked file, keep it a file
+        return cur;
+    }
+
+    // Traverse; return null if any component missing
+    private TrieNode search(String path) {
+        if ("/".equals(path)) return root;
+        String[] parts = tokens(path);
+        TrieNode cur = root;
+        for (String p : parts) {
+            cur = cur.children.get(p);
+            if (cur == null) return null;
+        }
+        return cur;
+    }
+
+    // Normalize path to components, skipping empty tokens (handles "/", "//", "/a/b/", etc.)
+    private static String[] tokens(String path) {
+        if (path == null || path.isEmpty() || "/".equals(path)) return new String[0];
+        return Arrays.stream(path.split("/"))
+                .filter(s -> !s.isEmpty())
+                .toArray(String[]::new);
+    }
+
+    private static String lastToken(String path) {
+        String[] t = tokens(path);
+        return t.length == 0 ? "/" : t[t.length - 1];
+    }
+
+    // -------- Node --------
+    static class TrieNode {
+        final String name;                    // directory/file name at this level
+        boolean isFile;                       // true if file
+        final StringBuilder content;          // only used if isFile
+        final Map<String, TrieNode> children; // name -> child
+
+        TrieNode(String name, boolean isFile) {
+            this.name = name;
+            this.isFile = isFile;
+            this.content = new StringBuilder();
+            this.children = new HashMap<>();
+        }
+    }
+
+    // -------- Demo --------
     public static void main(String[] args) {
-        DesignInMemoryFileSystem fileSystem = new DesignInMemoryFileSystem();
-        List<String> list1 = fileSystem.ls("/"); // return []
-        System.out.println("get list :"+list1);
-        fileSystem.mkdir("/a/b/c");
-        fileSystem.addContentToFile("/a/b/c/d", "hello");
-        List<String> list2 = fileSystem.ls("/"); // return ["a"]
-        System.out.println("get list :"+list2);
-        fileSystem.readContentFromFile("/a/b/c/d"); // return "hello"
-    }
-}
+        DesignInMemoryFileSystem fs = new DesignInMemoryFileSystem();
+        System.out.println(fs.ls("/"));                // []
 
-class TrieNode {
-    String name; // Name of the file or directory
-    boolean isFile; // Flag indicating whether it is a file or not
-    StringBuilder content = new StringBuilder(); // Content of the file if it is a file
-    Map<String, TrieNode> children = new HashMap<>(); // Child nodes, representing files and directories
+        fs.mkdir("/a/b/c");
+        fs.addContentToFile("/a/b/c/d", "hello");
 
-    // Method to insert a node and return the last node in the path.
-    TrieNode insert(String path, boolean isFile) {
-        TrieNode node = this;
-        String[] parts = path.split("/");
+        System.out.println(fs.ls("/"));                // ["a"]
+        System.out.println(fs.ls("/a/b/c"));           // ["d"]
+        System.out.println(fs.ls("/a/b/c/d"));         // ["d"]
+        System.out.println(fs.readContentFromFile("/a/b/c/d")); // "hello"
 
-        for (int i = 1; i < parts.length; ++i) {
-            String part = parts[i];
-            if (!node.children.containsKey(part)) {
-                node.children.put(part, new TrieNode());
-            }
-            node = node.children.get(part);
-        }
-
-        node.isFile = isFile;
-        if (isFile) {
-            node.name = parts[parts.length - 1]; // Set the name of the file
-        }
-
-        return node;
-    }
-
-    // Method to search for a node given a path.
-    TrieNode search(String path) {
-        TrieNode node = this;
-        String[] parts = path.split("/");
-
-        for (int i = 1; i < parts.length; ++i) {
-            String part = parts[i];
-            if (!node.children.containsKey(part)) {
-                return null; // Node not found
-            }
-            node = node.children.get(part);
-        }
-
-        return node; // Node found
+        // trailing slash & double slash are handled:
+        System.out.println(fs.ls("/a/b/c/"));          // ["d"]
+        fs.mkdir("//x///y//z/");
+        System.out.println(fs.ls("/x"));               // ["y"]
     }
 }

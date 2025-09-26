@@ -1,4 +1,6 @@
-package com.interview.Interview.Interview2025.Walmart.Round1;
+package com.interview.Interview.LeetCodeDesign;
+
+import com.interview.Interview.Interview2025.Walmart.Round1.AutoCompleteSearch;
 
 import java.util.*;
 
@@ -18,7 +20,7 @@ A method getTopK(prefix, k) → returns the top k words that start with prefix, 
 If frequencies are equal, order lexicographically.
 
  */
-public class AutoCompleteSearch {
+public class DesignAutoCompleteSearch {
 
     //global freq map : word -> freq
     private final Map<String, Integer> freqByWord = new HashMap<>();
@@ -27,7 +29,7 @@ public class AutoCompleteSearch {
 
     public static void main(String[] args) {
 
-        AutoCompleteSearch ac = new AutoCompleteSearch();
+        DesignAutoCompleteSearch ac = new DesignAutoCompleteSearch();
 //        ac.insert("apple", 50);
         ac.insert("app", 40);
         ac.insert("apply", 30);
@@ -89,7 +91,6 @@ public class AutoCompleteSearch {
         }
         return result;
     }
-
 
     //helper class to represent each word + its frequency.
     static class Entry {
@@ -156,6 +157,12 @@ public class AutoCompleteSearch {
         "appl".candidates: { "apple"(50) }
         "apple".candidates: { "apple"(50) }
 
+     */
+
+    /*
+    Each Trie node represents a prefix (e.g., root = "", then 'a', "ap", "app", …).
+    Each node keeps a sorted set of candidate words that start with that prefix, sorted by frequency (highest first),
+    and then by word (lexicographically) to break ties.
      */
     public static class TrieNode {
         Map<Character, TrieNode> children = new HashMap<>();

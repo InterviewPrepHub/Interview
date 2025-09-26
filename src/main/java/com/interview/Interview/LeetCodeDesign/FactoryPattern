@@ -1,0 +1,29 @@
+## What is the Factory Pattern?
+
+The Factory Pattern is a creational design pattern.
+
+It’s used when you don’t want your code to directly create objects with the new keyword everywhere.
+Instead, you centralize object creation in a factory class (or method).
+This makes the system easier to maintain, extend, and test.
+
+Think of it like a Pizza Shop:
+
+You don’t make your own pizza dough, sauce, and toppings at your table.
+You just say: “Give me a Margherita Pizza”.
+The kitchen (factory) knows how to prepare it and gives you the right pizza.
+If tomorrow they add “Farmhouse Pizza,” you don’t change anything — you just order it, and the kitchen knows how to build it.
+
+🚗 Applying it to Parking System
+
+In a Parking System, we have different types of vehicles (Car, Bike, Truck) and different types of parking spots (Compact, Large, Handicapped, Motorcycle).
+
+Without Factory Pattern:
+
+The client code (Main method or ParkingLot) would directly say new Car(), new MotorcycleSpot(), etc.
+This means client code is tightly coupled with object creation.
+
+With Factory Pattern:
+
+We create a VehicleFactory and a ParkingSpotFactory.
+The client just says: “I need a CAR” or “I need a spot for a TRUCK”.
+The factory decides which object to return.

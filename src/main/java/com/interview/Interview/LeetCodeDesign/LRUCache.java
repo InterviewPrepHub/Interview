@@ -15,35 +15,18 @@ operations are efficient, with an average time complexity of O(1).
 
 public class LRUCache<K,V> {
 
-    int capacity;
-    Map<K,Node> cache;
-    DoublyLinkedList<K,V> dll;
+    private final int capacity;
+    private final Map<K, Node> cache;
+    private final DoublyLinkedList dll;
 
-    LRUCache(int capacity) {
+    public LRUCache(int capacity) {
         this.capacity = capacity;
-        cache = new HashMap<>();
-        dll = new DoublyLinkedList<>();
-    }
-
-    public static void main(String[] args) {
-        LRUCache<Integer, Integer> lru = new LRUCache<>(2);
-
-        lru.put(1, 1);
-        lru.put(2, 2);
-        System.out.println(lru.get(1));
-
-        lru.put(3, 3);
-        System.out.println(lru.get(2));
-        System.out.println(lru.get(3));
-
-        lru.put(4, 4);
-        System.out.println(lru.get(1));
-        System.out.println(lru.get(3));
-        System.out.println(lru.get(4));
+        this.cache = new HashMap<>();
+        this.dll = new DoublyLinkedList();
     }
 
     public V get(K key) {
-        if(!cache.containsKey(key)) {
+        if (!cache.containsKey(key)) {
             return null;
         }
         Node node = cache.get(key);
@@ -53,30 +36,28 @@ public class LRUCache<K,V> {
     }
 
     public void put(K key, V value) {
-        if (!cache.containsKey(key)) {  //if key is not present in hashmap
+        if (!cache.containsKey(key)) {
             Node node = new Node(key, value);
             if (cache.size() >= capacity) {
-                Node tailNode = dll.removeTail(); // Remove the least recently used node
+                Node tailNode = dll.removeTail(); // remove LRU
                 cache.remove(tailNode.key);
             }
             cache.put(key, node);
             dll.addNodeToFront(node);
         } else {
             Node node = cache.get(key);
-            node.val = value; // Update the value of the existing node
+            node.val = value; // update
             dll.removeNode(node);
             dll.addNodeToFront(node);
         }
     }
 
-
-
-    class Node<K,V> {
-
+    // ------------------ Node ------------------
+    class Node {
         K key;
         V val;
-        Node next;
         Node prev;
+        Node next;
 
         Node(K key, V val) {
             this.key = key;
@@ -84,10 +65,10 @@ public class LRUCache<K,V> {
         }
     }
 
-    class DoublyLinkedList<K,V> {
-
-        private Node head;
-        private Node tail;
+    // ------------------ Doubly Linked List ------------------
+    class DoublyLinkedList {
+        private final Node head;
+        private final Node tail;
 
         DoublyLinkedList() {
             head = new Node(null, null);
@@ -97,10 +78,10 @@ public class LRUCache<K,V> {
         }
 
         void addNodeToFront(Node node) {
-            node.next = head.next;  // node -> tail
-            node.prev = head;   //head <- node
-            head.next.prev = node;  //  node <- tail
-            head.next = node;   // head -> node       head -> <- node -> <- tail
+            node.next = head.next;
+            node.prev = head;
+            head.next.prev = node;
+            head.next = node;
         }
 
         void removeNode(Node node) {
@@ -110,12 +91,30 @@ public class LRUCache<K,V> {
 
         Node removeTail() {
             if (tail.prev == head) {
-                return null; // List is empty
+                return null; // empty
             }
             Node node = tail.prev;
             removeNode(node);
             return node;
         }
+    }
+
+    // ------------------ Demo ------------------
+    public static void main(String[] args) {
+        LRUCache<Integer, Integer> lru = new LRUCache<>(2);
+
+        lru.put(1, 1);
+        lru.put(2, 2);
+        System.out.println(lru.get(1)); // 1
+
+        lru.put(3, 3); // evicts key=2
+        System.out.println(lru.get(2)); // null
+        System.out.println(lru.get(3)); // 3
+
+        lru.put(4, 4); // evicts key=1
+        System.out.println(lru.get(1)); // null
+        System.out.println(lru.get(3)); // 3
+        System.out.println(lru.get(4)); // 4
     }
     
 }

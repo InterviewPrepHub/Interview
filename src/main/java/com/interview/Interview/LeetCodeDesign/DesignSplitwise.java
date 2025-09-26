@@ -103,10 +103,10 @@ public class DesignSplitwise {
         ExpenseSharingApp app = new ExpenseSharingApp();
 
         // Adding users
-        app.addUser(new User("u1", "User1", "user1@example.com", "1234567890"));
-        app.addUser(new User("u2", "User2", "user2@example.com", "1234567891"));
-        app.addUser(new User("u3", "User3", "user3@example.com", "1234567892"));
-        app.addUser(new User("u4", "User4", "user4@example.com", "1234567893"));
+        app.addUser(new User("u1", "User1"));
+        app.addUser(new User("u2", "User2"));
+        app.addUser(new User("u3", "User3"));
+        app.addUser(new User("u4", "User4"));
 
         // Adding expenses
 //        app.addExpense(new Expense("u1", 1000, 4, Arrays.asList("u1", "u2", "u3", "u4"), ExpenseType.EQUAL, null));
@@ -250,14 +250,10 @@ class ExpenseSharingApp {
 class User {
     String userId;
     String name;
-    String email;
-    String mobileNumber;
 
-    User(String userId, String name, String email, String mobileNumber) {
+    User(String userId, String name) {
         this.userId = userId;
         this.name = name;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
     }
 }
 
