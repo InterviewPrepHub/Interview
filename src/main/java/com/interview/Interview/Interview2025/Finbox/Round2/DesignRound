@@ -1,0 +1,22 @@
+
+Multiple Vendors for a particular service: V1, V2, V3
+Cost of each vendor: C1, C2, C3
+
+Example: SMS Gateway, or internal SMS Delivery Service
+Goal: To always send the SMS on the request by any downstream service
+
+
+Flow after the SMS Service receives a SEND SMS request:
+1. Payload validation
+2. Choose Best Vendor
+3. Send the SMS
+
+
+Parameters to choose the best vendor:
+1. Cost
+2. latency
+3. Uptime
+
+
+Problem statement: SMS Service needs to guarantee the delivery of an sms
+while choosing the best vendor at all times.

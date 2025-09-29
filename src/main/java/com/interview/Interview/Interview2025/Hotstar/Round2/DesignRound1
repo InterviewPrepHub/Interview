@@ -1,0 +1,49 @@
+Build payment system
+
+This will orchestrate any and all payment within the organization
+Payment method like UPI, CC, DC will be managed by this system Payment gateway used will be managed by this system.
+Example, Rzaorpay / Phone pe for UPI, PayU/Billdesk for CC/DC etc
+PGs will inform about the success/failure via a webhook
+
+Scale:
+
+10k rps peak traffic
+100 Mn transactions per day, 400Mn reads per day
+
+
+Functional req:
+
+show users all payment modes
+handle payment through these payament modes like UPI, CC etc
+choosing correct PG
+tracking payment status
+handle webhook from the PG - confirm success/failure
+allow client system:
+    - inititae payment
+    - query payment status
+    - notification on status change
+
+NonFunctional requirment:
+
+throughput - 10K RPS [write] 100 M tx/day - write 400Mn reads/day
+high availability
+latency
+
+
+Flow:
+
+Client -> orchestra [API Server]
+inititae payment , userid, amt, pm, status
+
+
+API Server -> [adapter]PG layer [Rzaorpay / Phone pe ]
+
+making ext api call to PG to initiate pyment
+
+PG -> User [PG UI] ->user action complete
+
+PG -> webhook service : PF informing API server aboutthe status of webhook
+webhook call - > update payment DB
+
+
+orchestrator -> client [polling/razorpay push]  -> payment status

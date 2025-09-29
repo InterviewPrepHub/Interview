@@ -1,0 +1,9 @@
+merchants started providing 1st copy items instead of original
+leading to customer impact, gmv impact
+we need to provide ways in which we can detect this fraud
+risk tagging of the merchant
+enforcing a puase to seller until they provide calrification
+
+1. identify the seller, publish fraud items
+2 once detected , tagg them as risky sellers
+3. enforcememt

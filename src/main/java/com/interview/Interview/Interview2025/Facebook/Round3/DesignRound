@@ -1,0 +1,4 @@
+Imagine we have a massive gaming platform with millions of users playing games everyday. When they finish a game, we want to display a scoreboard at the end that shows the following:
+* How the user performed globally. We want to show their rank and score, as well as the 10 users who place immediately above and below them
+* How the user performed among their friends.
+* The top 10 scorers for both the global and friend lists.
