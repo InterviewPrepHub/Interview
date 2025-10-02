@@ -1,0 +1,18 @@
+If we have two functions with same semantics f(x) and g(x) and with O(f(x)) < O(g(x)), under what circumstances
+we choose g(x) over f(x)
+
+O(f(x)) < O(g(x)) -> time complexity
+
+
+
+
+
+Design portal for sellers to upload/list product
+
+I got stuck on how the data is stored in DB.
+what is the flow of a single API. What is the request and response and why did my response have list of ids
+
+where are the ids created - in db or service layer. ---> it should be db layer
+
+
+

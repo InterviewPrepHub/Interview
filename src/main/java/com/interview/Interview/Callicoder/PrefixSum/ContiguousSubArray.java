@@ -33,9 +33,8 @@ i   prefix    need    map[firstIndex]  start
 2     30        4       {30,2}
 3     26        0       {28,3}
 4     38        5       {38,4}         {0,4}
-
-
  */
+
 public class ContiguousSubArray {
 
     // Returns [start, end] (inclusive) of a subarray summing to target, or [-1, -1] if none.
