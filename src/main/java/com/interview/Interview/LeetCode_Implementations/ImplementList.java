@@ -29,6 +29,21 @@ public class ImplementList {
         System.out.println(node.data);
     }
 
+    public void print(RNode node) {
+        while (node.next != null) {
+            System.out.print(node.val+ "->");
+            node = node.next;
+        }
+        System.out.println(node.val);
+
+        System.out.println("random pointer");
+
+        while (node.next != null) {
+            System.out.print(node.val+ "->");
+            node = node.next;
+        }
+    }
+
     public static void main(String[] args) {
         ImplementList impl = new ImplementList();
         impl.add(1);
@@ -151,8 +166,98 @@ public class ImplementList {
 
         copyLLUsingRecursion(impl6.head);
 
+        System.out.println();
+        System.out.println("Copy list with random pointers");
+        ImplementList impl7 = new ImplementList();
+        RNode rn1 = new RNode(7);
+        RNode rn2 = new RNode(13);
+        RNode rn3 = new RNode(11);
+        RNode rn4 = new RNode(10);
+        RNode rn5 = new RNode(1);
+
+        rn1.next = rn2;
+        rn1.random = null;
+        rn2.next = rn3;
+        rn2.random = rn1;
+        rn3.next = rn4;
+        rn3.random = rn5;
+        rn4.next = rn5;
+        rn4.random = rn3;
+        rn5.next = null;
+        rn5.random = rn1;
+
+        RNode rnode = copyListWithRandomNode(rn1);
+        impl7.print(rnode);
+
     }
 
+    static class RNode {
+        int val;
+        RNode next;
+        RNode random;
+
+        public RNode(int val) {
+            this.val = val;
+            next = null;
+            random = null;
+        }
+    }
+
+    private static RNode copyListWithRandomNode(RNode head) {
+
+        if (head == null) return null;
+
+        // 1) Weave copy nodes in between originals: A -> A' -> B -> B' -> ...
+        RNode curr = head;
+        while (curr != null) {
+            RNode copy = new RNode(curr.val);
+            copy.next = curr.next;  // new node points to the next original
+            curr.next = copy;       // original points to its copy
+            curr = copy.next;       // move to next original
+        }
+
+        /*
+            original list -> 7 -> 13 -> 11 -> 10 -> 1 -> null
+            new list -> 7 -> 7' -> 13 -> 13' -> 10 -> 10' -> 1 -> 1' -> null
+
+            copy = curr.next
+            7' = 7.next
+            13' = 13.next;
+
+            copy.random = curr.random.next
+            13'.random = 13 -> 7 -> 7'
+         */
+
+        // 2) Assign random pointers for the copies
+        curr = head;
+        while (curr != null) {
+            RNode copy = curr.next; // copy right after curr
+            if (curr.random != null) {
+                // curr.random.next is the copy of curr.random
+                copy.random = curr.random.next;
+            } else {
+                copy.random = null;
+            }
+            curr = copy.next; // jump to next original
+        }
+
+        //3) separate two lists
+        curr = head;
+        RNode copyHead = head.next;
+        while (curr != null) {
+            RNode copy = curr.next;          // the copy node
+            curr.next = copy.next;          // restore original next
+            if (copy.next != null) {
+                copy.next = copy.next.next; // link copy to next copy
+            } else {
+                copy.next = null;
+            }
+            curr = curr.next;               // move original forward
+        }
+
+        return copyHead;
+
+    }
 
     private static void copyLLUsingRecursion(LLNode head) {
 
@@ -286,7 +391,7 @@ public class ImplementList {
             x--;              //2,1,0
         }
 
-        //ptr1 = 7, ptr2 = 3
+        //ptr1 = 3, ptr2 = 7
         LLNode newHead = ptr1.next; //5
         ptr1.next = null;
 

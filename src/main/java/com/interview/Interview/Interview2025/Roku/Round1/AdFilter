@@ -1,0 +1,107 @@
+Write a function to filter a list of ads given a request that contains block rules. After blocking, apply deduplication so that:
+
+No duplicate ad IDs are kept.
+
+At most one ad per adomain is kept (first one wins).
+
+If any category was already used by a kept ad, later ads sharing any of those categories are dropped (first use wins).
+
+Order of processing is the input order.
+
+Inputs
+1) AdRequest
+id - string
+blockedAdomain: Set<String> — advertiser domains to block (e.g., { "x.com", "y.com" })
+blockedCategory: Set<String> — categories to block (e.g., { "5", "355" })
+
+2) ads: List<Ad>
+
+Each Ad has:
+
+id: String — unique ad identifier (can repeat in input; treat exact repeats as duplicates)
+adomain: String — advertiser domain (e.g., "x.com")
+categories: List<String> — list of category IDs (e.g., ["1","2","3"])
+
+
+
+
+Output
+
+A filtered array/list of ads, preserving input order of the first occurrences that survive all rules.
+
+Rules (in this exact order)
+
+For each ad in input order:
+
+Block by domain: if ad.adomain ∈ blockedAdomain → drop.
+
+Block by category: if ad.categories ∩ blockedCategory ≠ ∅ → drop.
+
+Dedup by id: if this id was already kept → drop.
+
+Dedup by domain: if this adomain was already used by a kept ad → drop.
+
+Dedup by category: if any category was already used by a kept ad → drop.
+
+Otherwise keep the ad and mark its id, adomain, and all its categories as used.
+
+“First wins” policy is determined purely by the input order.
+
+
+
+Examples
+Example A — Basic dedup (no blocking)
+
+Input
+
+blockedAdomain = {}
+blockedCategory = {}
+
+ads:
+ad1: id=ad1, domain=x.com, categories=[1,2,3]
+ad2: id=ad2, domain=x.com, categories=[4]      // drop: domain x.com already used by ad1
+ad3: id=ad3, domain=y.com, categories=[1,5]    // drop: category 1 already used by ad1
+ad4: id=ad4, domain=z.com, categories=[5,6]    // keep
+
+
+Output
+
+[ ad1, ad4 ]
+
+
+Example B — Blocking + dedup interplay
+
+Input
+
+blockedAdomain = { x.com }
+blockedCategory = { 5 }
+
+ads:
+ad1: id=ad1, domain=x.com, categories=[1]      // block by domain
+ad2: id=ad2, domain=y.com, categories=[5]      // block by category
+ad3: id=ad3, domain=y.com, categories=[6]      // keep
+ad4: id=ad4, domain=y.com, categories=[7]      // drop: domain y.com already used by ad3
+ad5: id=ad5, domain=z.com, categories=[6]      // drop: category 6 already used by ad3
+ad6: id=ad6, domain=t.com, categories=[8]      // keep
+
+
+Output
+
+[ ad3, ad6 ]
+
+Example C — Duplicate id
+
+Input
+
+blockedAdomain = {}
+blockedCategory = {}
+
+ads:
+ad1: id=ad1, domain=a.com, categories=[1]
+ad2: id=ad1, domain=b.com, categories=[2]      // drop: duplicate id
+ad3: id=ad3, domain=c.com, categories=[3]
+
+
+Output
+
+[ ad1, ad3 ]
